@@ -1,12 +1,13 @@
 package br.com.rogalabs.postsapi.view
 
-import android.app.Dialog
-import android.opengl.Visibility
 import android.os.AsyncTask
 import android.os.Bundle
-import android.view.View
+import android.view.Gravity
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@ import br.com.rogalabs.postsapi.presenter.ListPostPresenter
 import br.com.rogalabs.postsapi.recyclerview.RecyclerViewListPost
 import br.com.rogalabs.postsapi.util.AsycCircular
 import kotlinx.android.synthetic.main.activity_list_post.*
-import java.net.UnknownHostException
+import kotlinx.android.synthetic.main.toolbar.*
 
 class ListPost : AppCompatActivity() {
 
@@ -26,17 +27,10 @@ class ListPost : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_post)
 
+        titleActionBar.text = resources.getString(R.string.postagem_recente)
+        setSupportActionBar(toolbar)
         GetPost(this, recyclerviewListPost, circularBar).execute()
     }
-
-//    private fun initRecyclerView() {
-//        recyclerviewListPost.apply {
-//            layoutManager = LinearLayoutManager(this@ListPost)
-//            postAdapter = RecyclerViewListPost()
-//            adapter = postAdapter
-//        }
-//    }
-
 
     internal class GetPost internal constructor
     (activity: ListPost, recyclerView: RecyclerView, progressBar: ProgressBar)

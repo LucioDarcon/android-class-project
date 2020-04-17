@@ -4,4 +4,6 @@
     <string name="body">body</string>
 
     <string name="generic_message">Erro!</string>
+    <string name="postagem_recente">Postagens Recentes</string>
+
 </resources>
