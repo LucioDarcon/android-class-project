@@ -12,6 +12,10 @@
     <style name="mTheme" parent="AppTheme">
     </style>
 
+    <style name="mThemeRecyclerComments" parent="AppTheme">
+        <item name="colorPrimary">@color/colorToolbar</item>
+    </style>
+
     <style name="mBodyListPost" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textStyle">bold</item>
     </style>

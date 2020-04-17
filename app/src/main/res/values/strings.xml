@@ -6,4 +6,7 @@
     <string name="generic_message">Erro!</string>
     <string name="postagem_recente">Postagens Recentes</string>
 
+    <string name="name">Nome</string>
+    <string name="email">Email</string>
+
 </resources>

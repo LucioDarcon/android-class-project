@@ -2,49 +2,57 @@ package br.com.rogalabs.postsapi.view
 
 import android.os.AsyncTask
 import android.os.Bundle
+import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.rogalabs.postsapi.R
-import br.com.rogalabs.postsapi.contract.PostContract
-import br.com.rogalabs.postsapi.model.Posts
-import br.com.rogalabs.postsapi.presenter.ListPostPresenter
-import br.com.rogalabs.postsapi.recyclerview.RecyclerViewListPost
+import br.com.rogalabs.postsapi.contract.DetailsContract
+import br.com.rogalabs.postsapi.model.Comments
+import br.com.rogalabs.postsapi.presenter.ListCommentsPresenter
+import br.com.rogalabs.postsapi.recyclerview.RecyclerViewListComments
 import br.com.rogalabs.postsapi.util.AsycCircular
-import kotlinx.android.synthetic.main.activity_list_post.*
+import kotlinx.android.synthetic.main.activity_list_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ListPost : AppCompatActivity() {
+class ListComment : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_post)
+        setContentView(R.layout.activity_list_comment)
 
+        val idPost = intent.getStringExtra("idPost").toInt()
+        val postTitle = intent.getStringExtra("postTitle").toString()
+        val complementTitle = "O que a galera comentou sobre $postTitle"
         titleActionBar.text = resources.getString(R.string.postagem_recente)
+        headerRecyclerComments.text = complementTitle
         setSupportActionBar(toolbar)
-        GetPost(this, recyclerviewListPost).execute()
+
+
+        GetComments(this, recyclerviewListComments, idPost).execute()
     }
 
-    internal class GetPost internal constructor
-    (activity: ListPost, recyclerView: RecyclerView)
-        : AsyncTask<Void, Void, Boolean>(), PostContract.ListPostView {
+    internal class GetComments internal constructor
+    (activity: ListComment, recyclerView: RecyclerView, idPost: Int)
+        : AsyncTask<Void, Void, Boolean>(), DetailsContract.ListCommentsView {
 
         private val mRecyclerview = recyclerView
         private val mActivity = activity
+        private val id = idPost
         private val mProgressBar = ProgressBar(mActivity)
-        private lateinit var mPostAdapter: RecyclerViewListPost
-        private lateinit var mPresenter: ListPostPresenter
+        private lateinit var mCommentAdapter: RecyclerViewListComments
+        private lateinit var mPresenter: ListCommentsPresenter
 
         override fun doInBackground(vararg p0: Void): Boolean {
             var result = false
             try {
                 initRecyclerView()
-                mPresenter = ListPostPresenter()
+                mPresenter = ListCommentsPresenter()
                 mPresenter.setView(this)
-                mPresenter.getPost()
+                mPresenter.getPost(id)
                 result = true
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -55,8 +63,8 @@ class ListPost : AppCompatActivity() {
         private fun initRecyclerView() {
             mRecyclerview.apply {
                 layoutManager = LinearLayoutManager(mActivity)
-                mPostAdapter = RecyclerViewListPost()
-                adapter = mPostAdapter
+                mCommentAdapter = RecyclerViewListComments()
+                adapter = mCommentAdapter
             }
         }
 
@@ -69,9 +77,9 @@ class ListPost : AppCompatActivity() {
             super.onPostExecute(result)
             when (result) {
                 true -> {
-                    val mListPosts = mPostAdapter.getListItems()
+                    val mListPosts = mCommentAdapter.getListItems()
                     initRecyclerView()
-                    mPostAdapter.submitList(mListPosts)
+                    mCommentAdapter.submitList(mListPosts)
                 }
                 false -> {
                     Toast.makeText(mActivity, R.string.generic_message, Toast.LENGTH_LONG).show()
@@ -79,9 +87,10 @@ class ListPost : AppCompatActivity() {
             }
         }
 
-        override fun showPosts(listPost: List<Posts>) {
-            mPostAdapter.submitList(listPost)
+        override fun showComments(listComments: List<Comments>) {
+            mCommentAdapter.submitList(listComments)
         }
     }
 
 }
+

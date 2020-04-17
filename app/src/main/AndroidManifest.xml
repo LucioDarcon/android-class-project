@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/mTheme">
-        <activity android:name=".view.PostDetails"></activity>
+        <activity android:name=".view.ListComment" android:theme="@style/mThemeRecyclerComments"></activity>
         <activity android:name=".view.ListPost">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
