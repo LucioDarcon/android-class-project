@@ -15,12 +15,13 @@ class AsycCircular(var progressBar: ProgressBar) : AsyncTask<Void, Int, Boolean>
     }
 
     override fun doInBackground(vararg params: Void): Boolean {
+        var result = false
         try {
-
+            result = true
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return true
+        return result
     }
 
     override fun onProgressUpdate(vararg values: Int?) {

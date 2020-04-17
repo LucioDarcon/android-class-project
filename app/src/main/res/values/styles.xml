@@ -9,8 +9,7 @@
     </style>
 
 
-    <style name="mTheme" parent="AppTheme">
-    </style>
+    <style name="mTheme" parent="AppTheme" />
 
     <style name="mThemeRecyclerComments" parent="AppTheme">
         <item name="colorPrimary">@color/colorToolbar</item>
@@ -19,8 +18,13 @@
     <style name="mBodyListPost" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="mTitleActionBar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
 
+    </style>
+
+    <style name="mTitleActionBarComments" parent="mTitleActionBar">
+        <item name="android:textColor">@color/colorTextToolbar</item>
     </style>
 
 </resources>

@@ -1,5 +1,6 @@
 package br.com.rogalabs.postsapi.view
 
+import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
@@ -13,7 +14,6 @@ import br.com.rogalabs.postsapi.contract.DetailsContract
 import br.com.rogalabs.postsapi.model.Comments
 import br.com.rogalabs.postsapi.presenter.ListCommentsPresenter
 import br.com.rogalabs.postsapi.recyclerview.RecyclerViewListComments
-import br.com.rogalabs.postsapi.util.AsycCircular
 import kotlinx.android.synthetic.main.activity_list_comment.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -26,23 +26,27 @@ class ListComment : AppCompatActivity() {
 
         val idPost = intent.getStringExtra("idPost").toInt()
         val postTitle = intent.getStringExtra("postTitle").toString()
+        alterToolbar(postTitle)
+
+        GetComments(this, recyclerviewListComments, idPost, circleBar).execute()
+    }
+
+    private fun alterToolbar(postTitle: String){
         val complementTitle = "O que a galera comentou sobre $postTitle"
         titleActionBar.text = resources.getString(R.string.postagem_recente)
+        titleActionBar.setTextColor(Color.parseColor("#797979"))
         headerRecyclerComments.text = complementTitle
         setSupportActionBar(toolbar)
-
-
-        GetComments(this, recyclerviewListComments, idPost).execute()
     }
 
     internal class GetComments internal constructor
-    (activity: ListComment, recyclerView: RecyclerView, idPost: Int)
+    (activity: ListComment, recyclerView: RecyclerView, idPost: Int, progressBar: ProgressBar)
         : AsyncTask<Void, Void, Boolean>(), DetailsContract.ListCommentsView {
 
         private val mRecyclerview = recyclerView
         private val mActivity = activity
         private val id = idPost
-        private val mProgressBar = ProgressBar(mActivity)
+        private val mProgressBar = progressBar
         private lateinit var mCommentAdapter: RecyclerViewListComments
         private lateinit var mPresenter: ListCommentsPresenter
 
@@ -70,7 +74,6 @@ class ListComment : AppCompatActivity() {
 
         override fun onPreExecute() {
             super.onPreExecute()
-            AsycCircular(mProgressBar).execute()
         }
 
         override fun onPostExecute(result: Boolean) {
@@ -80,6 +83,7 @@ class ListComment : AppCompatActivity() {
                     val mListPosts = mCommentAdapter.getListItems()
                     initRecyclerView()
                     mCommentAdapter.submitList(mListPosts)
+                    mProgressBar.visibility = View.GONE
                 }
                 false -> {
                     Toast.makeText(mActivity, R.string.generic_message, Toast.LENGTH_LONG).show()

@@ -3,7 +3,7 @@
     <string name="title">Title</string>
     <string name="body">body</string>
 
-    <string name="generic_message">Erro!</string>
+    <string name="generic_message">Impossível se conectar!</string>
     <string name="postagem_recente">Postagens Recentes</string>
 
     <string name="name">Nome</string>

@@ -27,18 +27,16 @@
         <include layout="@layout/toolbar" />
 
         <ProgressBar
-            android:id="@+id/circularBar"
+            android:id="@+id/circleBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
             android:layout_centerInParent="true"
-            android:visibility="gone"
             android:layout_margin="16dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewListComments"
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_below="@+id/headerRecyclerComments"
