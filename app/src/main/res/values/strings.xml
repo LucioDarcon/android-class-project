@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Posts API</string>
+    <string name="title">Title</string>
+    <string name="body">body</string>
+
+    <string name="generic_message">Erro!</string>
 </resources>
